@@ -6,22 +6,17 @@ namespace NameGen
 {
     public class NameGenService : INameGenService
     {
-        private readonly ILogger<NameGenService> _logger;
-        private static readonly string[] Vowels = {"a", "e", "i", "o", "u", "y", "ie", "ae", "ui", "ion", "ius" , "iel" };
+        private static readonly string[] Vowels = {"a", "e", "i", "o", "u", "y", "ie", "ae", "ui", "ion", "ius" , "iel","oo", "ou","au" };
         private static readonly string[] Consonants =
         {
-            "tau", "d", "g", "k", "m", "p", "x", "th", "r", "kh", "gh", "ro", "rd", "uk", "ok", "il",
+            "tau", "c", "b","f","d", "g","h","j", "k","l","m","n", "p", "s", "t","x", "th", "r", "kh", "gh", "ro", "rd", "uk", "ok", "il",
             "kan", "gn", "md", "gr", "hel", "gon", "wen", "hil", "mn", "nor", "rod", "gw", "thr", "dha", "ech", "oth",
             "abd", "rk"
         };
-
+        private static readonly string[] Separators = {"-", "'", " "};
         private readonly string[][] _mainArray = {Vowels, Consonants};
-        private const float ChanceToBreak = 0.20f;
 
-        public NameGenService(ILogger<NameGenService> logger)
-        {
-            _logger = logger;
-        }
+        private const float ChanceOfSeparator = 0.1f;
 
         public List<string> GenerateName(int n)
         {
@@ -38,22 +33,19 @@ namespace NameGen
         private string GenerateMedievalName()
         {
             var random = new Random();
-            var firstArrayAtStart = random.Next(0, 2);
+            var indexOfFirstArray = random.Next(0, 2);
+            var range = random.Next(3, 7);
+
             var result = string.Empty;
- 
-            for (var i = 0; i < 5; i++)
+            
+            for (var i = 0; i < range; i++, indexOfFirstArray++)
             {
-                var indexOfFirstArray = firstArrayAtStart % 2;
-                var indexOfSecondArray = random.Next(0, _mainArray[firstArrayAtStart % 2].Length);
-
-                result += _mainArray[indexOfFirstArray][indexOfSecondArray];
-
-                if (i >= 2 && random.NextDouble() < ChanceToBreak)
+                if (i > 1 && i < range && random.NextDouble() < ChanceOfSeparator)
                 {
-                    break;
+                    result += Helpers.RandomFromArray(Separators);
                 }
 
-                firstArrayAtStart+=1;
+                result += Helpers.RandomFromArray(_mainArray[indexOfFirstArray % 2]);
             }
 
             return Helpers.CapitalizeFirstLetter(result);
