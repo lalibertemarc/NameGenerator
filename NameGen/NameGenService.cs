@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace NameGen
@@ -9,9 +8,9 @@ namespace NameGen
         private static readonly string[] Vowels = {"a", "e", "i", "o", "u", "y", "ie", "ae", "ui", "ion", "ius" , "iel","oo", "ou","au" };
         private static readonly string[] Consonants =
         {
-            "tau", "c", "b","f","d", "g","h","j", "k","l","m","n", "p", "s", "t","x", "th", "r", "kh", "gh", "ro", "rd", "uk", "ok", "il",
+            "tau", "d", "g", "k", "m", "p", "x", "th", "r", "kh", "gh", "ro", "rd", "uk", "ok", "il",
             "kan", "gn", "md", "gr", "hel", "gon", "wen", "hil", "mn", "nor", "rod", "gw", "thr", "dha", "ech", "oth",
-            "abd", "rk"
+            "abd", "rk", "ck"
         };
         private static readonly string[] Separators = {"-", "'", " "};
         private readonly string[][] _mainArray = {Vowels, Consonants};
