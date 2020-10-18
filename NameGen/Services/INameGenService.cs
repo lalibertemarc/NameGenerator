@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NameGen
+namespace NameGen.Services
 {
     public interface INameGenService
     {
