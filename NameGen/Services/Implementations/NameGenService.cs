@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NameGen.Configs;
+using System;
 using System.Collections.Generic;
 
 namespace NameGen.Services.Implementations
@@ -6,10 +7,12 @@ namespace NameGen.Services.Implementations
     public class NameGenService : INameGenService
     {
         private readonly IRandomEventHandler _randomEventHandler;
-        
-        public NameGenService(IRandomEventHandler randomEventHandler)
+        private readonly IConfigs _configs;
+
+        public NameGenService(IRandomEventHandler randomEventHandler, IConfigs configs)
         {
             _randomEventHandler = randomEventHandler;
+            _configs = configs;
         }
 
         public List<string> GenerateName(int n)
@@ -20,6 +23,7 @@ namespace NameGen.Services.Implementations
                 var name = GenerateMedievalName();
                 Console.WriteLine(name);
                 output.Add(name);
+                _configs.ResetConfigs();
             }
             return output;
         }
@@ -28,7 +32,7 @@ namespace NameGen.Services.Implementations
         {
             var result = string.Empty;
             
-            for (var i = 0; i < Configs.Range; i++, Configs.IndexOfFirstArray++)
+            for (var i = 0; i < _configs.Range; i++, _configs.IndexOfFirstArray++)
             {
                 result += _randomEventHandler.HandleSeparators(i);
                 result += _randomEventHandler.AddSyllable();

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NameGen.Configs;
 using NameGen.Services;
 using NameGen.Services.Implementations;
 using System;
@@ -31,6 +32,7 @@ namespace NameGen
             services.AddLogging(configure => configure.AddConsole())
                 .AddSingleton<INameGenService, NameGenService>()
                 .AddTransient<IRandomEventHandler, RandomEventHandler>()
+                .AddSingleton<IConfigs, Configs.Configs>()
                 ;
         }
     }
